@@ -60,6 +60,7 @@ if streamlit.button('Get Fruit Load List'):
     my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
     my_data_rows = get_fruit_load_list()
     streamlit.dataframe(my_data_rows)
+    my_cnx.close()
 
 
 def insert_row_snowflake(new_fruit):
@@ -73,23 +74,19 @@ if streamlit.button("Add a fruit to load list"):
     my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
     back_from_function = insert_row_snowflake(add_fruit)
     streamlit.text(back_from_function)
+    my_cnx.close()
 
-streamlit.stop();
+# streamlit.stop();
 
 # get data from snowflake
 # snowflake.connector.paramstyle = 'qmark'
 streamlit.header("Fruityvice Fruit Advice!(Dropdown list values from snowflake)")
-
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
 my_cur = my_cnx.cursor()
 my_cur.execute("select fruit_name from fruit_load_list")
-
-
-# my_data_row = my_data_row.set_index(0)
-# fruit_choice = streamlit.text_input('What fruit would you like information about?','Kiwi')
-
-fruits_selected = streamlit.text_in("What fruit would you like to add?", list(my_data_rows))
+fruits_selected = streamlit.multiselect("What fruit would you like to add?", list(my_data_rows))
 streamlit.write("Thanks for adding ",fruits_selected)
+my_cnx.close()
 
 
 
