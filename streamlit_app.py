@@ -38,7 +38,7 @@ my_cur = my_cnx.cursor()
 my_cur.execute("select * from fruit_load_list")
 # my_cur.execute("SELECT CURRENT_USER(), CURRENT_ACCOUNT(), CURRENT_REGION(),current_database(), current_schema()")
 my_data_row = my_cur.fetchall()
-streamlit.text("Hello from Snowflake:")
+streamlit.header("Load fruit list:")
 streamlit.dataframe(my_data_row)
 
 
