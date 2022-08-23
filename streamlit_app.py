@@ -32,9 +32,8 @@ my_cur = my_cnx.cursor()
 my_cur.execute("select fruit_name from fruit_load_list")
 my_data_row = my_cur.fetchall()
 streamlit.dataframe(my_data_row)
-my_data_row = my_data_row.set_index('0')
+# my_data_row = my_data_row.set_index(0)
 # fruit_choice = streamlit.text_input('What fruit would you like information about?','Kiwi')
 
-fruits_selected = streamlit.multiselect("What fruit would you like information about?", list(my_data_row.index))
-streamlit.write('The user entered ', fruits_selected)
-
+fruits_selected = streamlit.multiselect("What fruit would you like to add?", list(my_data_row))
+streamlit.write("Thanks for adding ",fruits_selected)
