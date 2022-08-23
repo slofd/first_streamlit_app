@@ -28,16 +28,12 @@ streamlit.dataframe(fruityvice_normalized)
 streamlit.header("Fruityvice Fruit Advice!")
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
 my_cur = my_cnx.cursor()
-my_cur.execute("select * from fruit_load_list")
+my_cur.execute("select count(*) from fruit_load_list")
 my_data_row = my_cur.fetchall()
-streamlit.dataframe(my_data_row)
-
-# my_data_row = my_data_row.set_index('fruit_name')
-# # fruit_choice = streamlit.text_input('What fruit would you like information about?','Kiwi')
-# fruits_selected = streamlit.multiselect("What fruit would you like information about?", list(my_data_row.index),
-#                                         ['Avocado', 'Strawberries'])
-#
-# streamlit.write('The user entered ', fruits_selected)
+my_data_row = my_data_row.set_index('fruit_name')
+# fruit_choice = streamlit.text_input('What fruit would you like information about?','Kiwi')
+fruits_selected = streamlit.multiselect("What fruit would you like information about?", list(my_data_row.index))
+streamlit.write('The user entered ', fruits_selected)
 
 
 # my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
