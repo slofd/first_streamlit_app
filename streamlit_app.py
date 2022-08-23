@@ -25,6 +25,20 @@ fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon"
 fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
 streamlit.dataframe(fruityvice_normalized)
 
+#dropdown from api response
+streamlit.header("Fruityvice Fruit Advice!(Dropdown list values from api response)")
+try:
+    fruit_choice=streamlit.text_input('What fruit would you like information about?')
+    if not fruit_choice:
+        streamlit.error("Please select a fruit to get information")
+    else:
+        fruityvice_response=requests.get("https://fruityvice.com/api/fruit/"+fruit_choice)
+        fruityvice_normalized=pandas.json_normalize(fruityvice_response.json())
+        streamlit.dataframe(fruityvice_normalized)
+except URLError as e:
+    streamlit.error()
+
+
 # get data from snowflake
 # snowflake.connector.paramstyle = 'qmark'
 streamlit.header("Fruityvice Fruit Advice!(Dropdown list values from snowflake)")
@@ -37,7 +51,7 @@ streamlit.dataframe(my_data_row)
 # my_data_row = my_data_row.set_index(0)
 # fruit_choice = streamlit.text_input('What fruit would you like information about?','Kiwi')
 
-fruits_selected = streamlit.multiselect("What fruit would you like to add?", list(my_data_row))
+fruits_selected = streamlit.text_in("What fruit would you like to add?", list(my_data_row))
 streamlit.write("Thanks for adding ",fruits_selected)
 
 my_cur.execute("insert into fruit_load_list values ('from streamlit')")
