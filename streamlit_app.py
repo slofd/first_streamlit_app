@@ -27,7 +27,7 @@ streamlit.dataframe(fruits_to_show)
 streamlit.header("Fruityvice Fruit Advice!")
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
 my_cur = my_cnx.cursor()
-my_cur.execute("select fruit_name from fruit_load_list")
+my_cur.execute('select fruit_name from fruit_load_list')
 my_data_row = my_cur.fetchall()
 my_data_row =my_data_row.set_index('fruit_name');
 
