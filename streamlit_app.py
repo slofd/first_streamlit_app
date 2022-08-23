@@ -25,7 +25,7 @@ streamlit.dataframe(fruityvice_normalized)
 
 # get data from snowflake
 # snowflake.connector.paramstyle = 'qmark'
-streamlit.header("Fruityvice Fruit Advice!")
+streamlit.header("Fruityvice Fruit Advice!(Dropdown list values from snowflake)")
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
 my_cur = my_cnx.cursor()
 my_cur.execute("select count(*) from fruit_load_list")
