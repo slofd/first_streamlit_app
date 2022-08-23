@@ -33,6 +33,7 @@ def get_fruityvice_data(this_fruit_choice):
 
 
 
+
 #dropdown from api response
 streamlit.header("Fruityvice Fruit Advice!(Dropdown list values from api response)")
 try:
@@ -46,6 +47,19 @@ except URLError as e:
     streamlit.error()
 
 
+#function
+def get_fruit_load_list():
+    with my_cnx.cursor() as my_cur:
+        my_cur.execute("select fruit_name from fruit_load_list")
+        return my_cur.fetchall()
+
+
+if streamlit.button('Get Fruit Load List'):
+    my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
+    my_data_rows = get_fruit_load_list()
+    streamlit.dataframe(my_data_rows)
+
+
 # get data from snowflake
 # snowflake.connector.paramstyle = 'qmark'
 streamlit.header("Fruityvice Fruit Advice!(Dropdown list values from snowflake)")
@@ -53,12 +67,12 @@ streamlit.stop();
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
 my_cur = my_cnx.cursor()
 my_cur.execute("select fruit_name from fruit_load_list")
-my_data_row = my_cur.fetchall()
-streamlit.dataframe(my_data_row)
+
+
 # my_data_row = my_data_row.set_index(0)
 # fruit_choice = streamlit.text_input('What fruit would you like information about?','Kiwi')
 
-fruits_selected = streamlit.text_in("What fruit would you like to add?", list(my_data_row))
+fruits_selected = streamlit.text_in("What fruit would you like to add?", list(my_data_rows))
 streamlit.write("Thanks for adding ",fruits_selected)
 
 my_cur.execute("insert into fruit_load_list values ('from streamlit')")
