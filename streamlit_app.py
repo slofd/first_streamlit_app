@@ -47,6 +47,7 @@ except URLError as e:
     streamlit.error()
 
 
+streamlit.stop();
 #function
 def get_fruit_load_list():
     with my_cnx.cursor() as my_cur:
@@ -64,7 +65,7 @@ if streamlit.button('Get Fruit Load List'):
 # get data from snowflake
 # snowflake.connector.paramstyle = 'qmark'
 streamlit.header("Fruityvice Fruit Advice!(Dropdown list values from snowflake)")
-streamlit.stop();
+
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
 my_cur = my_cnx.cursor()
 my_cur.execute("select fruit_name from fruit_load_list")
