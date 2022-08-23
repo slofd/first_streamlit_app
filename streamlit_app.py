@@ -35,7 +35,7 @@ streamlit.dataframe(fruityvice_normalized)
 
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
 my_cur = my_cnx.cursor()
-my_cur.execute("select * from fruit_load_list where fruit_name='banana'")
+my_cur.execute("select fruit_name from fruit_load_list")
 # my_cur.execute("SELECT CURRENT_USER(), CURRENT_ACCOUNT(), CURRENT_REGION(),current_database(), current_schema(),current_role()")
 my_data_row = my_cur.fetchall()
 streamlit.header("Load fruit list:")
