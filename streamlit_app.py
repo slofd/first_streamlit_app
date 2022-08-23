@@ -24,6 +24,7 @@ streamlit.dataframe(fruits_to_show)
 
 
 # get data from snowflake
+snowflake.connector.paramstyle='qmark'
 streamlit.header("Fruityvice Fruit Advice!")
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
 my_cur = my_cnx.cursor()
