@@ -16,6 +16,13 @@ fruits_selected = streamlit.multiselect("Pick some fruits:", list(my_fruit_list.
 fruits_to_show = my_fruit_list.loc[fruits_selected]
 streamlit.dataframe(fruits_to_show)
 
+
+# show api response data using pandas lib
+streamlit.header("Data table from api.")
+fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
+fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
+streamlit.dataframe(fruityvice_normalized)
+
 # get data from snowflake
 # snowflake.connector.paramstyle = 'qmark'
 streamlit.header("Fruityvice Fruit Advice!")
@@ -32,11 +39,6 @@ streamlit.dataframe(my_data_row)
 #
 # streamlit.write('The user entered ', fruits_selected)
 
-# show api response data using pandas lib
-streamlit.header("Data table from api.")
-fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
-fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
-streamlit.dataframe(fruityvice_normalized)
 
 # my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
 # my_cur = my_cnx.cursor()
